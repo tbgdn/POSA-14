@@ -24,21 +24,35 @@ class SimpleAtomicLong
      * The ReentrantReadWriteLock used to serialize access to mValue.
      */
     // TODO - add the implementation
+    private ReentrantReadWriteLock mLock;
 
     /**
      * Creates a new SimpleAtomicLong with the given initial value.
      */
     public SimpleAtomicLong(long initialValue) {
         // TODO - you fill in here
+        this.mValue = initialValue;
+        this.mLock = new ReentrantReadWriteLock();
     }
 
     /**
      * @brief Gets the current value
-     * 
+     *
      * @returns The current value
      */
     public long get() {
         // TODO - you fill in here
+        long value = 0;
+        final Lock read = mLock.readLock();
+
+        read.lock();
+        try{
+            value = this.mValue;
+        }finally {
+            read.lock();
+        }
+
+        return value;
     }
 
     /**
@@ -48,6 +62,17 @@ class SimpleAtomicLong
      */
     public long decrementAndGet() {
         // TODO - you fill in here
+        long value = 0;
+        final Lock write = mLock.writeLock();
+
+        write.lock();
+        try{
+            value = --this.mValue;
+        }finally {
+            write.lock();
+        }
+
+        return value;
     }
 
     /**
@@ -57,6 +82,17 @@ class SimpleAtomicLong
      */
     public long getAndIncrement() {
         // TODO - you fill in here
+        long value = 0;
+        final Lock write = mLock.writeLock();
+
+        write.lock();
+        try{
+            value = this.mValue++;
+        }finally {
+            write.lock();
+        }
+
+        return value;
     }
 
     /**
@@ -66,6 +102,17 @@ class SimpleAtomicLong
      */
     public long getAndDecrement() {
         // TODO - you fill in here
+        long value = 0;
+        final Lock write = mLock.writeLock();
+
+        write.lock();
+        try{
+            value = this.mValue--;
+        }finally {
+            write.lock();
+        }
+
+        return value;
     }
 
     /**
@@ -75,6 +122,17 @@ class SimpleAtomicLong
      */
     public long incrementAndGet() {
         // TODO - you fill in here
+        long value = 0;
+        final Lock write = mLock.writeLock();
+
+        write.lock();
+        try{
+            value = ++this.mValue;
+        }finally {
+            write.lock();
+        }
+
+        return value;
     }
 }
 
