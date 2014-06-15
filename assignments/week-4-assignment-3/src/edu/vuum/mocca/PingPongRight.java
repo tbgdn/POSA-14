@@ -129,7 +129,7 @@ public class PingPongRight {
         // TODO - You fill in here, make pingSema start out unlocked.
         SimpleSemaphore pingSema = new SimpleSemaphore(1, false);
         // TODO - You fill in here, make pongSema start out locked.
-        SimpleSemaphore pongSema = new SimpleSemaphore(1, false);
+        SimpleSemaphore pongSema = new SimpleSemaphore(0, false);
 
         System.out.println(startString);
 
