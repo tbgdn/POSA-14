@@ -58,9 +58,9 @@ public class AndroidPlatformStrategy extends PlatformStrategy
          * and appends the outputString to a TextView. 
          */
         // TODO - You fill in here.
-		mActivity.runOnUiThread(new Runnable(){
+		mActivity.get().runOnUiThread(new Runnable(){
 			public void run(){
-				mTextViewOutput.setText(outputString);
+				mTextViewOutput.append(outputString + "\n");
 			}
 		});
     }
