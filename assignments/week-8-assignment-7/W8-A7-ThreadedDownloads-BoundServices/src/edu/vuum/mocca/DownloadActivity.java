@@ -76,7 +76,7 @@ public class DownloadActivity extends DownloadBase {
                 // service parameter into an interface that can be
                 // used to make RPC calls to the Service.
 
-                mDownloadCall = (DownloadCall)service.queryLocalInterface(name.getClassName());
+                mDownloadCall = DownloadCall.Stub.asInterface(service);
             }
 
             /**
@@ -109,7 +109,7 @@ public class DownloadActivity extends DownloadBase {
                 // service parameter into an interface that can be
                 // used to make RPC calls to the Service.
 
-                mDownloadRequest = (DownloadRequest)service.queryLocalInterface(name.getClassName());
+                mDownloadRequest = DownloadRequest.Stub.asInterface(service);
             }
 
             /**
@@ -151,6 +151,7 @@ public class DownloadActivity extends DownloadBase {
                         DownloadActivity.this.displayBitmap(imagePathname);
                     }
                 };
+                DownloadActivity.this.runOnUiThread(displayRunnable);
             }
         };
      
@@ -168,10 +169,8 @@ public class DownloadActivity extends DownloadBase {
             // TODO - You fill in here to use mDownloadCall to
             // download the image & then display it.
             try {
-                mDownloadCall.downloadImage(uri);
+                this.displayBitmap(getDownloadCall().downloadImage(uri));
             } catch (RemoteException e) {
-
-
             }
             break;
 
@@ -180,7 +179,7 @@ public class DownloadActivity extends DownloadBase {
             // mDownloadRequest, passing in the appropriate Uri and
             // callback.
             try {
-                mDownloadRequest.downloadImage(uri, mDownloadCallback);
+                getDownloadRequest().downloadImage(uri, getDownloadCallback());
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
